@@ -1,4 +1,7 @@
 <?php
+
+// To add printers to your account follow the following link 
+// https://support.google.com/cloudprint/answer/1686197
 /**
  * PHP implementation of Google Cloud Print
  *
