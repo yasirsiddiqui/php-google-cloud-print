@@ -209,7 +209,7 @@ class GoogleCloudPrint {
 		$printers = array();
 		if (isset($jsonobj->printers)) {
 			foreach ($jsonobj->printers as $gcpprinter) {
-				$printers[] = array('name' =>$gcpprinter->name,'id' =>$gcpprinter->id);
+				$printers[] = array('name' =>$gcpprinter->displayName,'id' =>$gcpprinter->id);
 			}
 		}
 		return $printers;
