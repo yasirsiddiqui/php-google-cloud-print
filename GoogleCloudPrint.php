@@ -197,6 +197,26 @@ class GoogleCloudPrint {
 	}
 	
 	/**
+	 * Function saveAuthToken
+	 *
+	 * Getter for the authtoken field
+	 */
+	public function saveAuthToken() {
+		return $this->authtoken;
+	}
+
+	/**
+	 * Function setAuthToken
+	 *
+	 * Setter for the authtoken field
+	 *
+	 * @param Token $token // Token to be used in the printing
+	 */
+	public function setAuthToken($token) {
+		$this->authtoken = $token;
+	}
+
+	/**
 	 * Function parsePrinters
 	 * 
 	 * Parse json response and return printers array
