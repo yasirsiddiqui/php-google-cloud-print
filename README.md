@@ -2,6 +2,7 @@ Google Cloud Print
 ======================
 
 PHP class to print documents using Google Cloud Print using OAuth2.
+
 First of all you have to add printers to Google Cloud Print 
 using your Gmail account and Google Chrome browser. Follow the
 instructions on the following link to add printer to Google Cloud Print
