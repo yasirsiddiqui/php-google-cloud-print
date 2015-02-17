@@ -19,34 +19,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-require_once 'GoogleCloudPrint.php';
-
 session_start();
-// Create object
-$gcp = new GoogleCloudPrint();
-$gcp->setAuthToken($_SESSION['accessToken']);
 
-$printers = $gcp->getPrinters();
-//print_r($printers);
-
-$printerid = "";
-if(count($printers)==0) {
-	
-	echo "Could not get printers";
-	exit;
+if (!isset($_SESSION['accessToken'])) {
+    
+    header('Location: oAuthRedirect.php?op=getauth');
 }
-else {
-	
-	$printerid = $printers[0]['id']; // Pass id of any printer to be used for print
-	// Send document to the printer
-	$resarray = $gcp->sendPrintToPrinter($printerid, "Printing Doc using Google Cloud Printing", "./pdf.pdf", "application/pdf");
-	
-	if($resarray['status']==true) {
-		
-		echo "Document has been sent to printer and should print shortly.";
-	}
-	else {
-		echo "An error occured while printing the doc. Error code:".$resarray['errorcode']." Message:".$resarray['errormessage'];
-	}
-}
+?>
