@@ -29,4 +29,20 @@ Replace client_id, client_secret values in $redirectConfig and $authConfig array
 You also need to replace redirect_uri in both $redirectConfig and $authConfig arrays. This URL should
 point to oAuthRedirect.php on your server.
 
-Hit index.php and see results.
+## For Online Access hit index.php 
+
+Online access requires authorization every time you need to send print to printer once token in Session gets expired.
+
+## For Offline Access (when you want to send prints without user presence) hit offlineAccess.php
+
+Offline access requires authorization only once or unless user has revoked access. You should use
+
+offline access when you want to send prints to printer with out the presence of user or send prints to printer
+
+using a cron job script.
+
+Once you hit offlineAccess.php you will be redirected to offlineToken.php which will show you your refresh token.
+
+You need to save refresh token to database, file or some cache systems as later on when you will send
+
+print to printer in offline mode you need to replace that refrsh token at line # 29 on cron.php
