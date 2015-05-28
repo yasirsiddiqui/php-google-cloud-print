@@ -19,7 +19,7 @@
     if (isset($_GET['offlinetoken'])) {
     echo "<p class=\"disclaimer\">Here is your offline access token: ".$_GET['offlinetoken']." <br>You need to save it
     to database, file or some cache system so that you can use it later on.<br>
-    You need to replace this token in cron.php at line # 9 either by querying database
+    You need to replace this token in cron.php at line # 29 either by querying database
     ,cache system or from file.";
 }
 ?>
