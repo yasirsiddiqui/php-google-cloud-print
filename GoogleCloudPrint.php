@@ -34,6 +34,7 @@ class GoogleCloudPrint {
 	
 	private $authtoken;
 	private $httpRequest;
+	private $refreshtoken;
 	
 	/**
 	 * Function __construct
@@ -63,6 +64,45 @@ class GoogleCloudPrint {
 	 */
 	public function getAuthToken() {
 		return $this->authtoken;
+	}
+	
+	
+	/**
+	 * Function getAccessTokenByRefreshToken
+	 *
+	 * Gets access token by making http request
+	 * 
+	 * @param $url url to post data to
+	 * 
+	 * @param $post_fields post fileds array
+	 * 
+	 * return access tokem
+	 */
+	
+	public function getAccessTokenByRefreshToken($url,$post_fields) {
+		$responseObj =  $this->getAccessToken($url,$post_fields);
+		return $responseObj->access_token;
+	}
+	
+	
+	/**
+	 * Function getAccessToken
+	 *
+	 * Makes Http request call
+	 * 
+	 * @param $url url to post data to
+	 * 
+	 * @param $post_fields post fileds array
+	 * 
+	 * return http response
+	 */
+	public function getAccessToken($url,$post_fields) {
+		
+		$this->httpRequest->setUrl($url);
+		$this->httpRequest->setPostData($post_fields);
+		$this->httpRequest->send();
+		$response = json_decode($this->httpRequest->getResponse());
+		return $response;
 	}
 	
 	/**

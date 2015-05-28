@@ -26,12 +26,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 require_once 'Config.php';
-require_once 'HttpRequest.Class.php';
+require_once 'GoogleCloudPrint.php';
 
-if(isset($_GET['op']) && $_GET['op']=="getauth") {
+if (isset($_GET['op'])) {
 	
-	header("Location: ".$urlconfig['authorization_url']."?".http_build_query($redirectConfig));
-	exit;
+	if ($_GET['op']=="getauth") {
+		header("Location: ".$urlconfig['authorization_url']."?".http_build_query($redirectConfig));
+		exit;
+	}
+	else if ($_GET['op']=="offline") {
+		header("Location: ".$urlconfig['authorization_url']."?".http_build_query(array_merge($redirectConfig,$offlineAccessConfig)));
+		exit;
+	}
 }
 
 session_start();
@@ -40,20 +46,20 @@ session_start();
 if(isset($_GET['code']) && !empty($_GET['code'])) {
     
     $code = $_GET['code'];
-    // create http request object and initialize with access token url
-    $httpRequest = new HttpRequest($urlconfig['accesstoken_url']);
     $authConfig['code'] = $code;
-    // Set data to be posted
-    $httpRequest->setPostData($authConfig);
-    // Send request
-    $httpRequest->send();
-    // Get request response
-    $response = $httpRequest->getResponse();
-    // parse json data
-    $responseObj = json_decode($response);
-    $accessToken = $responseObj->access_token;
-    $_SESSION['accessToken'] = $accessToken;
     
+    // Create object
+    $gcp = new GoogleCloudPrint();
+    $responseObj = $gcp->getAccessToken($urlconfig['accesstoken_url'],$authConfig);
+    
+    $accessToken = $responseObj->access_token;
+
+    // We requested offline access
+    if (isset($responseObj->refresh_token)) {
+	header("Location: offlineToken.php?offlinetoken=".$responseObj->refresh_token);
+	exit;
+    }
+    $_SESSION['accessToken'] = $accessToken;
     header("Location: example.php");
 }
 

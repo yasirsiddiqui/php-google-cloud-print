@@ -19,13 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-session_start();
+  
+header('Location: oAuthRedirect.php?op=offline');
 
-if (!isset($_SESSION['accessToken'])) {
-    
-    header('Location: oAuthRedirect.php?op=getauth');
-}
-else {
-    header("Location: example.php");
-}
 ?>

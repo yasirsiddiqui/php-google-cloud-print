@@ -37,13 +37,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         'code' => '',
         'client_id' 	=> 'YOUR-CLIENT-ID',
         'client_secret' => 'YOUR-CLIENT-SECRET',
-        'redirect_uri' 	=> 'http://yourdomain.com/oAuthRedirect.phpp',
+        'redirect_uri' 	=> 'ttp://yourdomain.com/oAuthRedirect.php',
         "grant_type"    => "authorization_code"
+    );
+    
+    $offlineAccessConfig = array(
+        'access_type' => 'offline'
+    );
+    
+    $refreshTokenConfig = array(
+        
+        'refresh_token' => "",
+        'client_id' => $authConfig['client_id'],
+        'client_secret' => $authConfig['client_secret'],
+        'grant_type' => "refresh_token" 
     );
     
     $urlconfig = array(	
         'authorization_url' 	=> 'https://accounts.google.com/o/oauth2/auth',
         'accesstoken_url'   	=> 'https://accounts.google.com/o/oauth2/token',
+        'refreshtoken_url'      => 'https://www.googleapis.com/oauth2/v3/token'
     );
     
 ?>
