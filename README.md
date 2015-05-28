@@ -20,9 +20,9 @@ https://console.developers.google.com/
 
 2) Select APIS & AUTH –> credentials from the left menu.
 
-3) Click Create new Client ID button and complete data on this wizard.
+3) Click Create new Client ID button. A popup will appear. In Authorized redirect URIs text area enter url that should point to oAuthRedirect.php on your server.
 
-4) After submitting this form, we can get the client Id, secret key etc
+4) After submitting this form, we can get the client Id, secret key etc.
 
 Replace client_id, client_secret values in $redirectConfig and $authConfig arrays in Config.php file.
 
