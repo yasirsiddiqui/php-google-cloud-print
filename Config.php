@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         'code' => '',
         'client_id' 	=> 'YOUR-CLIENT-ID',
         'client_secret' => 'YOUR-CLIENT-SECRET',
-        'redirect_uri' 	=> 'ttp://yourdomain.com/oAuthRedirect.php',
+        'redirect_uri' 	=> 'http://yourdomain.com/oAuthRedirect.php',
         "grant_type"    => "authorization_code"
     );
     
