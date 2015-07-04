@@ -31,7 +31,8 @@ class GoogleCloudPrint {
 	
 	const PRINTERS_SEARCH_URL = "https://www.google.com/cloudprint/search";
 	const PRINT_URL = "https://www.google.com/cloudprint/submit";
-	
+    const JOBS_URL = "https://www.google.com/cloudprint/jobs";
+
 	private $authtoken;
 	private $httpRequest;
 	private $refreshtoken;
@@ -203,14 +204,35 @@ class GoogleCloudPrint {
 		// Has document been successfully sent?
 		if($response->success=="1") {
 			
-			return array('status' =>true,'errorcode' =>'','errormessage'=>"");
+			return array('status' =>true,'errorcode' =>'','errormessage'=>"", 'id' => $response->job->id);
 		}
 		else {
 			
 			return array('status' =>false,'errorcode' =>$response->errorCode,'errormessage'=>$response->message);
 		}
 	}
-	
+
+    public function jobStatus($jobid)
+    {
+        // Prepare auth headers with auth token
+        $authheaders = array(
+            "Authorization: Bearer " .$this->authtoken
+        );
+
+        // Make http call for sending print Job
+        $this->httpRequest->setUrl(self::JOBS_URL);
+        $this->httpRequest->setHeaders($authheaders);
+        $this->httpRequest->send();
+        $responsedata = json_decode($this->httpRequest->getResponse());
+
+        foreach ($responsedata->jobs as $job)
+            if ($job->id == $jobid)
+                return $job->status;
+
+        return 'UNKNOWN';
+    }
+
+
 	/**
 	 * Function parsePrinters
 	 * 
