@@ -37,12 +37,10 @@ Online access requires authorization every time you need to send print to printe
 
 Offline access requires authorization only once or unless user has revoked access. You should use
 
-offline access when you want to send prints to printer with out the presence of user or send prints to printer
-
-using a cron job script.
+offline access when you want to send prints to printer with out the presence of user or send prints to printer using a cron job script.
 
 Once you hit offlineAccess.php you will be redirected to offlineToken.php which will show you your refresh token.
 
-You need to save refresh token to database, file or some cache systems as later on when you will send
+You need to save refresh token to database, file or some cache systems as later on when you will send print to 
 
-print to printer in offline mode you need to replace that refrsh token at line # 29 on cron.php
+printer in offline mode you need to replace that refrsh token at line # 29 on cron.php
