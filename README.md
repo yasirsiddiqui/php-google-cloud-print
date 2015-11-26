@@ -41,6 +41,4 @@ offline access when you want to send prints to printer with out the presence of 
 
 Once you hit offlineAccess.php you will be redirected to offlineToken.php which will show you your refresh token.
 
-You need to save refresh token to database, file or some cache systems as later on when you will send print to 
-
-printer in offline mode you need to replace that refrsh token at line # 29 on cron.php
+You need to save refresh token to database, file or some cache systems as later on when you will send print to printer in offline mode you need to replace that refrsh token at line # 29 on cron.php
