@@ -177,8 +177,7 @@ class GoogleCloudPrint {
 			throw new Exception("Could not read the file. Please check file path.");
 		}
 		// Read file content
-		$contents = fread($handle, filesize($filepath));
-		fclose($handle);
+		$contents = file_get_contents($filepath);
 		
 		// Prepare post fields for sending print
 		$post_fields = array(
