@@ -164,7 +164,7 @@ class GoogleCloudPrint {
 			// We don't have auth token so throw exception
 			throw new Exception("Please first login to Google by calling loginToGoogle function");
 		}
-		// Check if prtinter id is passed
+		// Check if printer id is passed
 		if(empty($printerid)) {
 			// Printer id is not there so throw exception
 			throw new Exception("Please provide printer ID");	
@@ -197,7 +197,15 @@ class GoogleCloudPrint {
 		$this->httpRequest->setUrl(self::PRINT_URL);
 		$this->httpRequest->setPostData($post_fields);
 		$this->httpRequest->setHeaders($authheaders);
+
 		$this->httpRequest->send();
+
+		// Handle curl errors
+		if ($this->httpRequest->getCurlErrNo()) {
+			curl_close($this->httpRequest->getCurlHandle());
+			return array('status' =>false, 'errorcode' => $this->httpRequest->getCurlErrNo(), 'errormessage' => $this->httpRequest->getCurlErr());			
+		}
+
 		$response = json_decode($this->httpRequest->getResponse());
 		
 		// Has document been successfully sent?
