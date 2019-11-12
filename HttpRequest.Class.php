@@ -95,6 +95,11 @@ class HttpRequest {
 		$this->httpResponse = curl_exec($this->ch);
 		$this->curlErrNo = curl_errno($this->ch);
 		$this->curlErr = curl_error($this->ch);
+		if ($this->curlErrNo) {
+			curl_close($this->ch);
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -126,17 +131,19 @@ class HttpRequest {
 	 * return response of last http request sent
 	 * return http response
 	 */
-        public function getResponse() {
-            return $this->httpResponse;
-        }
+	public function getResponse() {
+		return $this->httpResponse;
+	}
         
     /**
 	 * Function __destruct
 	 * class destructor
 	 */
-        public function __destruct() {
-            curl_close($this->ch);
-        }
+	public function __destruct() {
+		if ($this->ch) {
+			curl_close($this->ch);
+		}
+	}
 }
 
 ?>
