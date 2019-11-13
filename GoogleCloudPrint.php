@@ -61,7 +61,7 @@ class GoogleCloudPrint {
 	 * Function getAuthToken
 	 *
 	 * Get auth tokem
-	 * return auth tokem
+	 * return auth token
 	 */
 	public function getAuthToken() {
 		return $this->authtoken;
@@ -101,7 +101,9 @@ class GoogleCloudPrint {
 		
 		$this->httpRequest->setUrl($url);
 		$this->httpRequest->setPostData($post_fields);
-		$this->httpRequest->send();
+		if (!$this->httpRequest->send()) {
+			return null;
+		}
 		$response = json_decode($this->httpRequest->getResponse());
 		return $response;
 	}
@@ -128,13 +130,15 @@ class GoogleCloudPrint {
 		
 		$this->httpRequest->setUrl(self::PRINTERS_SEARCH_URL);
 		$this->httpRequest->setHeaders($authheaders);
-		$this->httpRequest->send();
+		if (!$this->httpRequest->send()) {
+			return array();
+		}
 		$responsedata = $this->httpRequest->getResponse();
 		// Make Http call to get printers added by user to Google Cloud Print
 		$printers = json_decode($responsedata);
 		// Check if we have printers?
 		if(is_null($printers)) {
-			// We dont have printers so return balnk array
+			// We dont have printers so return blank array
 			return array();
 		}
 		else {
@@ -164,7 +168,7 @@ class GoogleCloudPrint {
 			// We don't have auth token so throw exception
 			throw new Exception("Please first login to Google by calling loginToGoogle function");
 		}
-		// Check if prtinter id is passed
+		// Check if printer id is passed
 		if(empty($printerid)) {
 			// Printer id is not there so throw exception
 			throw new Exception("Please provide printer ID");	
@@ -197,7 +201,14 @@ class GoogleCloudPrint {
 		$this->httpRequest->setUrl(self::PRINT_URL);
 		$this->httpRequest->setPostData($post_fields);
 		$this->httpRequest->setHeaders($authheaders);
+
 		$this->httpRequest->send();
+
+		// Handle curl errors
+		if (!$this->httpRequest->send()) {
+			return array('status' =>false, 'errorcode' => $this->httpRequest->getCurlErrNo(), 'errormessage' => "Google Cloud Print Error: ".$this->httpRequest->getCurlErr());
+		  }
+
 		$response = json_decode($this->httpRequest->getResponse());
 		
 		// Has document been successfully sent?
@@ -221,7 +232,9 @@ class GoogleCloudPrint {
         // Make http call for sending print Job
         $this->httpRequest->setUrl(self::JOBS_URL);
         $this->httpRequest->setHeaders($authheaders);
-        $this->httpRequest->send();
+        if (!$this->httpRequest->send()) {
+			return 'UNKNOWN';
+		}
         $responsedata = json_decode($this->httpRequest->getResponse());
 
         foreach ($responsedata->jobs as $job)
