@@ -201,9 +201,6 @@ class GoogleCloudPrint {
 		$this->httpRequest->setUrl(self::PRINT_URL);
 		$this->httpRequest->setPostData($post_fields);
 		$this->httpRequest->setHeaders($authheaders);
-
-		$this->httpRequest->send();
-
 		// Handle curl errors
 		if (!$this->httpRequest->send()) {
 			return array('status' =>false, 'errorcode' => $this->httpRequest->getCurlErrNo(), 'errormessage' => "Google Cloud Print Error: ".$this->httpRequest->getCurlErr());
