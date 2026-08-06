@@ -52,7 +52,7 @@ else {
 		echo "Document has been sent to printer and should print shortly.";
 	}
 	else {
-		echo "An error occured while printing the doc. Error code:".$resarray['errorcode']." Message:".$resarray['errormessage'];
+		echo "An error occurred while printing the doc. Error code:".$resarray['errorcode']." Message:".$resarray['errormessage'];
 	}
 }
 
